@@ -18,11 +18,14 @@ export default function Home() {
     new Vector(0.0, 10.1),
     new Vector(1.4, -9.6)
   );
+  
+  const startingLineExtended = startingLine.extendFromB(50);
 
   const first = {
     line: Line.fromLineSegment(startingLine),
     from: startingLine.a,
   };
+
 
   const [reflections, setReflections] = useState([first]);
   const [wentThrough, setWentThrough] = useState<number | null>(null);
@@ -40,6 +43,44 @@ export default function Home() {
     }
     setReflections(newReflections);
   };
+
+  const lastLine = () => {
+    if (wentThrough === null) return null;
+    const latest = reflections[wentThrough - 1];
+    const next = whitecell.nextReflection(latest);
+    const last = whitecell.nextReflection(next);
+    const lineSegExtended = new LineSegment(
+      next.from,
+      last.from,
+    ).extendFromA(50);
+    return (
+      <>
+        <line
+          style={{
+            fillOpacity: 0,
+            strokeWidth: 6,
+            stroke: "red",
+            filter: "blur(3px)",
+          }}
+          x1={lineSegExtended.a.x * 100}
+          y1={lineSegExtended.a.y * 100}
+          x2={lineSegExtended.b.x * 100}
+          y2={lineSegExtended.b.y * 100}
+        />
+        <line
+          style={{
+            fillOpacity: 0,
+            strokeWidth: 4,
+            stroke: "red",
+          }}
+          x1={lineSegExtended.a.x * 100}
+          y1={lineSegExtended.a.y * 100}
+          x2={lineSegExtended.b.x * 100}
+          y2={lineSegExtended.b.y * 100}
+        />
+      </>
+    );
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -83,13 +124,13 @@ export default function Home() {
         </div>
 
         <div style={{
-          width: "500px",
-          height: "500px",
+          width: "100%",
+          height: "100%",
           color: "white",
           opacity: "0.5",
           marginTop: "50px",
         }} >
-          <svg viewBox="-1000 -1000 2000 2000" width="100%" height="100%">
+          <svg viewBox="-1500 -1500 3000 3000" width="100%" height="100%">
             <ellipse
               rx={ellipse.a * 1000}
               ry={ellipse.b * 1000}
@@ -144,6 +185,30 @@ export default function Home() {
               stroke="white"
               strokeWidth="8"
             />
+            <line
+              style={{
+                fillOpacity: 0,
+                strokeWidth: 6,
+                stroke: "red",
+                filter: "blur(3px)",
+              }}
+              x1={startingLineExtended.a.x * 100}
+              y1={startingLineExtended.a.y * 100}
+              x2={startingLineExtended.b.x * 100}
+              y2={startingLineExtended.b.y * 100}
+            />
+            <line
+              style={{
+                fillOpacity: 0,
+                strokeWidth: 4,
+                stroke: "red",
+              }}
+              x1={startingLineExtended.a.x * 100}
+              y1={startingLineExtended.a.y * 100}
+              x2={startingLineExtended.b.x * 100}
+              y2={startingLineExtended.b.y * 100}
+            />
+            {wentThrough && lastLine()}
           </svg>
         </div>
       </div>

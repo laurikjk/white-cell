@@ -42,6 +42,10 @@ class Vector {
   public isApproximately(v: Vector, epsilon: number = 0.0001): boolean {
     return Math.abs(this.x - v.x) < epsilon && Math.abs(this.y - v.y) < epsilon;
   }
+
+  public scale(length: number): Vector {
+    return this.normalize().multiplyScalar(length);
+  }
 }
 
 export default Vector;
