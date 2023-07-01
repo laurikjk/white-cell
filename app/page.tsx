@@ -49,15 +49,16 @@ export default function Home() {
           WHITE CELL
         </h1>
 
+        <div className="flex flex-row items-center justify-center">
         <button
-          className="mt-8 bg-white text-black font-bold py-2 px-4 rounded"
+          className="mt-8 bg-white text-black font-bold py-2 px-4 rounded mr-4"
           onClick={() => next()}
         >
           NEXT
         </button>
 
         <button
-          className="mt-8 bg-white text-black font-bold py-2 px-4 rounded"
+          className="mt-8 bg-white text-black font-bold py-2 px-4 rounded mr-4"
           onClick={() => next(10)}
         >
           NEXT 10
@@ -69,8 +70,10 @@ export default function Home() {
         >
           NEXT 100
         </button>
+
+        </div>
         
-        <div>
+        <div className="mt-8 text-center">
           <p>
             amount of reflections: {reflections.length}
           </p>
@@ -90,23 +93,57 @@ export default function Home() {
             <ellipse
               rx={ellipse.a * 1000}
               ry={ellipse.b * 1000}
-              fill="none"
+              fill="white"
+              opacity={0.25}
               stroke="white"
-              strokeWidth="4"
+              strokeWidth="8"
             />
             <g>
-              {reflections.map((reflection, i) => (
-                <line
-                  key={i}
-                  x1={reflection.from.x * 100}
-                  y1={reflection.from.y * 100}
-                  x2={whitecell.calcCollision(reflection).x * 100}
-                  y2={whitecell.calcCollision(reflection).y * 100}
-                  stroke="white"
-                  strokeWidth="1"
-                />
-              ))}
+              {reflections.map((reflection, i) => {
+                const x1 = reflection.from.x * 100;
+                const y1 = reflection.from.y * 100;
+                const x2 = whitecell.calcCollision(reflection).x * 100;
+                const y2 = whitecell.calcCollision(reflection).y * 100;
+
+                return (
+                  <>
+                    <line
+                      style={{
+                        fillOpacity: 0,
+                        strokeWidth: 6,
+                        stroke: "red",
+                        filter: "blur(3px)",
+                      }}
+                      key={`glow-${i}`}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                    />
+                    <line
+                      style={{
+                        fillOpacity: 0,
+                        strokeWidth: 4,
+                        stroke: "red",
+                      }}
+                      key={`line-${i}`}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                    />
+                  </>
+                );
+              })}
             </g>
+
+            <ellipse
+              rx={ellipse.a * 1000}
+              ry={ellipse.b * 1000}
+              fill="none"
+              stroke="white"
+              strokeWidth="8"
+            />
           </svg>
         </div>
       </div>
