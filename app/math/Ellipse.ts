@@ -9,7 +9,6 @@ class Ellipse {
 
   /**
    * Ellipse equation: x^2/a^2 + y^2/b^2 = c
-
    */
   constructor(a: number, b: number, c: number) {
     this.a = a;
@@ -38,14 +37,18 @@ class Ellipse {
   public interceptsWithLine(line: Line): Vector[] {
     const { slope: m, intercept: x } = line;
     if (m === undefined) {
-      const y = Math.sqrt(this.c * this.b ** 2 - x * x * this.a ** 2);
-      return [new Vector(x, y), new Vector(x, -y)];
+      const h = x;
+      const y1 = this.b * Math.sqrt(this.c - (h / this.a) ** 2);
+      const y2 = -y1;
+      return [new Vector(h, y1), new Vector(h, y2)];
     }
     const a = 1 / this.a ** 2 + (m * m) / this.b ** 2;
     const b = (2 * m * x) / this.b ** 2;
     const c = (x * x) / this.b ** 2 - this.c;
 
     const xIntercepts = solveQuadratic(a, b, c);
+
+    console.log("xIntercepts", xIntercepts);
     if (xIntercepts.length === 0) return [];
     if (xIntercepts.length === 1) {
       const y = line.y(xIntercepts[0]);
@@ -55,6 +58,14 @@ class Ellipse {
     const y1 = line.y(xIntercepts[0]);
     const y2 = line.y(xIntercepts[1]);
     return [new Vector(xIntercepts[0], y1), new Vector(xIntercepts[1], y2)];
+  }
+
+  public rx(): number {
+    return this.a * Math.sqrt(this.c);
+  }
+
+  public ry(): number {
+    return this.b * Math.sqrt(this.c);
   }
 }
 
