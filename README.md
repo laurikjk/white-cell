@@ -19,3 +19,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+
+![ezgif com-video-to-gif](https://github.com/laurikjk/white-cell/assets/58427432/b061fcc7-73ff-4edb-89c2-620a0152b64b)
