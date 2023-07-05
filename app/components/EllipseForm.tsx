@@ -27,7 +27,7 @@ const EllipsePreview = ({ a, b, c }: Ellipse) => {
       ry={ry}
       style={{
         fillOpacity: 0,
-        strokeWidth: rx / 100,
+        strokeWidth: rx / 25,
         stroke: "white",
       }}
     />
