@@ -2,7 +2,7 @@
 
 ## Production
 
-[white-cell.vercel.app](https://white-cell.laurikjk.com/)
+[white-cell.laurikjk.com](https://white-cell.laurikjk.com/)
 
 ## Resources
 
